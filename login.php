@@ -14,7 +14,7 @@ if(isset($_POST['login'])){
   $password = mysqli_real_escape_string($connection, $_POST['password']);
 
   $sql = "SELECT * FROM student_users
-            WHERE username = '$username' AND password='$password'";
+            WHERE username = '$username' AND password ='$password' ";
 
   $user = $connection->query($sql) or die ($connection->error);
   $row = $user->fetch_assoc();
