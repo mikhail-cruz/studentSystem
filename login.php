@@ -10,11 +10,11 @@ if(!isset($_SESSION)){
 
 if(isset($_POST['login'])){
 
-  $username = $_POST['username'];
-  $password = $_POST['password'];
+  $username = mysqli_real_escape_string($connection, $_POST['username']);
+  $password = mysqli_real_escape_string($connection, $_POST['password']);
 
   $sql = "SELECT * FROM student_users
-            WHERE username = '$username' AND password = '$password'";
+            WHERE username = '$username' AND password='$password'";
 
   $user = $connection->query($sql) or die ($connection->error);
   $row = $user->fetch_assoc();
