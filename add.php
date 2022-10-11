@@ -31,7 +31,7 @@ if(isset($_POST['submit'])){
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Student Management System</title>
+  <title>Management System</title>
 
   <!-- * Bootstrap CDN  -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
@@ -44,7 +44,7 @@ if(isset($_POST['submit'])){
 </head>
 <body>
   <div class="container font-monospace">
-    <h1 class="m-5 text-center">Add New Student</h1>
+    <h1 class="m-5 text-center">Add New</h1>
     <div class="m-5 m-auto">
       <form action="" method="POST">
         <div class="mb-3">

@@ -8,7 +8,7 @@ include_once('connections/connection.php');
 
 $connection = connection();
 
-$sql = "SELECT * FROM student_list ORDER BY id DESC LIMIT 50";
+$sql = "SELECT * FROM student_list ORDER BY id DESC";
 $students = $connection->query($sql) or die ($connection->error);
 $row = $students->fetch_assoc();
 
@@ -20,7 +20,7 @@ $row = $students->fetch_assoc();
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Student Management System</title>
+  <title>Management System</title>
 
   <!-- * Bootstrap CDN  -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
@@ -39,12 +39,12 @@ $row = $students->fetch_assoc();
       echo 'Welcome Guest!';
     } ?>
     </p>
-    <h1 class="text-center mt-3">Student Management System</h1>
+    <h1 class="text-center mt-3 mb-5">Management System</h1>
 
     <div class="d-flex justify-content-between">
       <div>
         <?php if((isset($_SESSION['Access']) && $_SESSION['Access'] == 'administrator') ||(isset($_SESSION['Access']) && $_SESSION['Access'] == 'user')) { ?>
-        <a href="add.php" class="mb-3 text-decoration-none btn btn-sm btn-primary">Add New Student</a>
+        <a href="add.php" class="mb-3 text-decoration-none btn btn-sm btn-primary">Add New</a>
         <?php } ?>
       </div>
 

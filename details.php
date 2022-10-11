@@ -4,12 +4,6 @@ if(!isset($_SESSION)){
   session_start();
 }
 
-if(isset($_SESSION['Access']) && $_SESSION['Access'] == 'administrator'){
-  echo "Welcome ". $_SESSION['UserLogin'];
-}else{
-  echo header('Location: index.php');
-}
-
 include_once('connections/connection.php');
 
 $connection = connection();
@@ -28,7 +22,7 @@ $row = $students->fetch_assoc();
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Student Management System</title>
+  <title>Management System</title>
 
   <!-- * Bootstrap CDN  -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
@@ -41,7 +35,14 @@ $row = $students->fetch_assoc();
 </head>
 <body>
   <div class="container font-monospace">
-    <h1 class="text-center mt-3 mb-3">Student Details </h1>
+    <p class="text-center mt-3"><?php if(isset($_SESSION['UserLogin'])){
+      echo "Welcome ". $_SESSION['UserLogin'] . "!";
+    }else{
+      echo 'Welcome Guest!';
+    } ?>
+    </p>
+
+    <h1 class="text-center mt-3 mb-3">Details </h1>
 
     <a href="index.php" class="btn btn-sm btn-primary text-decoration-none"><i class="fa-solid fa-left-long"></i></a>
 
