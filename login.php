@@ -1,7 +1,6 @@
 <?php
 
 include_once('connections/connection.php');
-
 $connection = connection();
 
 if(!isset($_SESSION)){
@@ -14,21 +13,21 @@ if(isset($_POST['login'])){
   $password = mysqli_real_escape_string($connection, $_POST['password']);
 
   $sql = "SELECT * FROM student_users
-            WHERE username = '$username' AND password ='$password' ";
+            WHERE username = '$username' AND password = '$password' ";
 
   $user = $connection->query($sql) or die ($connection->error);
   $row = $user->fetch_assoc();
   $total = $user->num_rows;
 
-  if($total > 0){
+  if( $total > 0){
 
-    $_SESSION['UserLogin'] = $row['username'];
-    $_SESSION['Access'] = $row['access'];
+  $_SESSION['UserLogin'] = $row['username'];
+  $_SESSION['Access'] = $row['access'];
 
-    echo header('Location: index.php');
+  echo header('Location: index.php');
 
   }else{
-    echo 'No User Found!';
+    echo '<script>alert("No user found!")</script>';
   }
 
 }
@@ -52,16 +51,14 @@ if(isset($_POST['login'])){
 </head>
 <body>
   <div class="container font-monospace">
-    
+
     <div class="mt-5 w-25 mx-auto">
       <h4 class="text-center mb-3">Member Login</h4>
       <form action="" method="POST">
         <div class="mb-3">
-          <!-- <label for="username" class="form-label">Username</label> -->
           <input type="text" name="username" class="form-control" id="username" placeholder="Username" autocomplete="off">
         </div>
         <div class="mb-3">
-          <!-- <label for=password" class="form-label">Password</label> -->
           <input type="password" name="password" class="form-control" id="password" placeholder="Password" autocomplete="off">
         </div>
         <button type="submit" name="login" class="btn btn-primary w-100">Login</button>

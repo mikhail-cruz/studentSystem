@@ -1,14 +1,14 @@
 <?php
 
+include_once('connections/connection.php');
+$connection = connection();
+
 if(!isset($_SESSION)){
   session_start();
 }
 
-include_once('connections/connection.php');
 
-$connection = connection();
-
-$sql = "SELECT * FROM student_list ORDER BY id DESC";
+$sql = "SELECT * FROM student_list ORDER BY id DESC LIMIT 50";
 $students = $connection->query($sql) or die ($connection->error);
 $row = $students->fetch_assoc();
 
@@ -32,39 +32,72 @@ $row = $students->fetch_assoc();
   <link rel="stylesheet" href="./css/custom.css">
 </head>
 <body>
+  <nav class="navbar navbar-expand-lg navbar-light bg-primary">
+    <div class="container-fluid">
+      <a class="navbar-brand font-bold" href="#">MANAGEMENT</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="#">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">About</a>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Dropdown
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <li><a class="dropdown-item" href="#">Action</a></li>
+              <li><a class="dropdown-item" href="#">Another action</a></li>
+              <li><hr class="dropdown-divider"></li>
+              <li><a class="dropdown-item" href="#">Something else here</a></li>
+            </ul>
+          </li>
+        </ul>
+        <form class="d-flex">
+          <input class="form-control me-2" type="text" name="search" placeholder="Search" id="search">
+          <button class="btn btn-outline-light" type="submit" name="search">Search</button>
+        </form>
+      </div>
+    </div>
+  </nav>
+
   <div class="container font-monospace">
-    <p class="text-center mt-3"><?php if(isset($_SESSION['UserLogin'])){
+    <p class="text-center mt-3">
+      <?php 
+
+      if(isset($_SESSION['UserLogin'])){
       echo "Welcome ". $_SESSION['UserLogin'] . "!";
-    }else{
+      }else{
       echo 'Welcome Guest!';
-    } ?>
+      } 
+
+      ?>
     </p>
-    <h1 class="text-center mt-3 mb-5">Management System</h1>
 
     <div class="d-flex justify-content-between">
       <div>
-        <?php if((isset($_SESSION['Access']) && $_SESSION['Access'] == 'administrator') ||(isset($_SESSION['Access']) && $_SESSION['Access'] == 'user')) { ?>
+        <?php
+        if((isset($_SESSION['Access']) && $_SESSION['Access'] == 'administrator') ||(isset($_SESSION['Access']) && $_SESSION['Access'] == 'user')) { ?>
         <a href="add.php" class="mb-3 text-decoration-none btn btn-sm btn-primary">Add New</a>
-        <?php } ?>
-      </div>
-
-      <div class="">
-        <form action="result.php" class="d-flex" role="search" method="GET">
-          <input class="form-control me-2 w-100" type="search" name="search" id="search">
-          <button class="btn btn-outline-primary" type="submit" name="search">Search</button>
-        </form>
+        <?php } 
+        ?>
       </div>
 
       <div>
-        <?php if(isset($_SESSION['UserLogin'])){ ?>
+        <?php 
+        if(isset($_SESSION['UserLogin'])){ ?>
           <a href="logout.php" class="mb-3 text-decoration-none btn btn-sm btn-primary">Logout</a>
         <?php } else{ ?>
           <a href="login.php" class="mb-3 text-decoration-none btn btn-sm btn-primary">Login</a>
-        <?php } ?>
+        <?php } 
+        ?>
       </div>
-
     </div>
-
 
     <table class="table table-striped border table-hover table-bordered">
       <thead>
@@ -75,13 +108,21 @@ $row = $students->fetch_assoc();
         </tr>
       </thead>
         <tbody>
+
           <?php do{ ?>
         <tr>
-          <td class="w-25 text-center"><a class="text-decoration-none" href="details.php?ID=<?php echo $row['id']; ?>">View Details</a></td>
-          <td><?php echo $row['first_name']; ?></td>
-          <td><?php echo $row['last_name']; ?></td>
+          <td class="w-25 text-center">
+            <a class="text-decoration-none" href="details.php?ID=<?php echo $row['id']; ?>">View Details</a>
+          </td>
+          <td>
+            <?php echo $row['first_name']; ?>
+          </td>
+          <td>
+            <?php echo $row['last_name']; ?>
+          </td>
         </tr>
         <?php }while($row = $students->fetch_assoc()); ?>
+
       </tbody>
     </table>
   </div>

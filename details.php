@@ -5,14 +5,18 @@ if(!isset($_SESSION)){
 }
 
 include_once('connections/connection.php');
-
 $connection = connection();
+
+if(isset($_SESSION['Access']) && $_SESSION['Access'] == "administrator"){
+}else{
+  echo header("Location: index.php");
+}
 
 $id = $_GET['ID'];
 
 $sql = "SELECT * FROM student_list WHERE id = '$id'";
-$students = $connection->query($sql) or die ($connection->error);
-$row = $students->fetch_assoc();
+$person = $connection->query($sql) or die ($connection->error);
+$row = $person->fetch_assoc();
 
 ?>
 
@@ -34,28 +38,80 @@ $row = $students->fetch_assoc();
   <link rel="stylesheet" href="./css/custom.css">
 </head>
 <body>
-  <div class="container font-monospace">
-    <p class="text-center mt-3"><?php if(isset($_SESSION['UserLogin'])){
-      echo "Welcome ". $_SESSION['UserLogin'] . "!";
-    }else{
-      echo 'Welcome Guest!';
-    } ?>
-    </p>
 
+  <nav class="navbar navbar-expand-lg navbar-light bg-primary">
+    <div class="container-fluid">
+      <a class="navbar-brand font-bold" href="#">MANAGEMENT</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="index.php">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">About</a>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Dropdown
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <li><a class="dropdown-item" href="#">Action</a></li>
+              <li><a class="dropdown-item" href="#">Another action</a></li>
+              <li><hr class="dropdown-divider"></li>
+              <li><a class="dropdown-item" href="#">Something else here</a></li>
+            </ul>
+          </li>
+        </ul>
+        <form class="d-flex" action="result.php">
+          <input class="form-control me-2" type="search" name="search" placeholder="Search" id="search">
+          <button class="btn btn-outline-light" type="submit" name="search">Search</button>
+        </form>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container font-monospace">
     <h1 class="text-center mt-3 mb-3">Details </h1>
 
     <a href="index.php" class="btn btn-sm btn-primary text-decoration-none"><i class="fa-solid fa-left-long"></i></a>
 
     <div>
-      <div class="card m-auto shadow" style="width: 20rem;">
+      <div class="card m-auto shadow" style="width: 22rem;">
         <!-- <img src="..." class="card-img-top" alt="..."> -->
         <div class="card-body">
-          <p class="fw-bold">Student ID: <span class="fw-light"><?php echo $row['id']?></span> </p>
-          <p class="fw-bold">First Name: <span class="fw-light"><?php echo $row['first_name']?> </span></p>
-          <p class="fw-bold">Last Name: <span class="fw-light"><?php echo $row['last_name']?> </span></p>
-          <p class="fw-bold">Email: <span class="fw-light"><?php echo $row['email']?> </span></p>
-          <p class="fw-bold">Gender: <span class="fw-light"><?php echo $row['gender']?> </span></p>
-          <p class="fw-bold">Date of Birth: <span class="fw-light"><?php echo $row['birth_day']?></span> </p>
+          <p class="fw-bold">Student ID: 
+            <span class="fw-light">
+              <?php echo $row['id']?>
+            </span> 
+          </p>
+          <p class="fw-bold">First Name: 
+            <span class="fw-light">
+              <?php echo $row['first_name']?> 
+            </span>
+          </p>
+          <p class="fw-bold">Last Name: 
+            <span class="fw-light">
+              <?php echo $row['last_name']?> 
+            </span>
+          </p>
+          <p class="fw-bold">Email: 
+            <span class="fw-light">
+              <?php echo $row['email']?> 
+            </span>
+          </p>
+          <p class="fw-bold">Gender: 
+            <span class="fw-light">
+              <?php echo $row['gender']?> 
+            </span>
+          </p>
+          <p class="fw-bold">Date of Birth: 
+            <span class="fw-light">
+              <?php echo $row['birth_day']?>
+            </span> 
+          </p>
         </div>
         <form action="delete.php" method="POST" class="mt-0 mb-3 m-auto">
           <a href="edit.php?ID=<?php echo $row['id']; ?>" class="btn btn-sm btn-primary text-decoration-none">Edit</a>
@@ -64,8 +120,6 @@ $row = $students->fetch_assoc();
         </form>
       </div>
     </div>
-
-
 
   </div>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.min.js" integrity="sha384-IDwe1+LCz02ROU9k972gdyvl+AESN10+x7tBKgc9I5HFtuNz0wWnPclzo6p9vxnk" crossorigin="anonymous"></script>
